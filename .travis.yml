@@ -1,0 +1,6 @@
+language: ruby
+rvm:
+  - '2.1.3p242'
+before_install:
+  - sudo apt-get install gcc
+  - sudo apt-get install libpq-dev

@@ -22,4 +22,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rake"
   gem.add_development_dependency "simplecov", ">= 0.5.4"
   gem.add_development_dependency "flexmock", ">= 1.3.1"
+  gem.add_development_dependency 'timecop', '>= 0.7'
 end

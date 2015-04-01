@@ -4,14 +4,19 @@ require 'fluent/test'
 require 'fluent/plugin/out_redshift'
 require 'flexmock/test_unit'
 require 'zlib'
-
+require 'timecop'
 
 class RedshiftOutputTest < Test::Unit::TestCase
   def setup
     require 'aws-sdk-v1'
     require 'pg'
     require 'csv'
+    Timecop.freeze(Time.now)
     Fluent::Test.setup
+  end
+
+  def cleanup
+    Timecop.return
   end
 
   CONFIG_BASE= %[

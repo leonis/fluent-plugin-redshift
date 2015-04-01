@@ -1,6 +1,10 @@
 Amazon Redshift output plugin for Fluentd
 ========
 
+[![Build Status](https://travis-ci.org/leonis/fluent-plugin-redshift.svg?branch=master)](https://travis-ci.org/leonis/fluent-plugin-redshift)
+[![Coverage Status](https://coveralls.io/repos/leonis/fluent-plugin-redshift/badge.svg?branch=master)](https://coveralls.io/r/leonis/fluent-plugin-redshift?branch=master)
+[![Code Climate](https://codeclimate.com/github/leonis/fluent-plugin-redshift/badges/gpa.svg)](https://codeclimate.com/github/leonis/fluent-plugin-redshift)
+
 ## Overview
 
 Amazon Redshift output plugin uploads event logs to an Amazon Redshift Cluster. Supportted data formats are csv, tsv and json. An S3 bucket and a Redshift Cluster are required to use this plugin.

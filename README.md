@@ -148,6 +148,7 @@ log.post('your.tag', :log => "12345\t12345")
 # file_type: json
 require 'json'
 log.post('your.tag', :log => { :user_id => 12345, :data_id => 12345 }.to_json)
+log.post('your.tag', :log => { :user_id => 12345, :data_id => 12345 })
 
 # file_type: msgpack
 log.post('your.tag', :user_id => 12345, :data_id => 12345)

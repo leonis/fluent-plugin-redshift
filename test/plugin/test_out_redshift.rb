@@ -71,6 +71,7 @@ class RedshiftOutputTest < Test::Unit::TestCase
   RECORD_TSV_B = {"log" => %[val_e\tval_f\tval_g\tval_h]}
   RECORD_JSON_A = {"log" => %[{"key_a" : "val_a", "key_b" : "val_b"}]}
   RECORD_JSON_B = {"log" => %[{"key_c" : "val_c", "key_d" : "val_d"}]}
+  RECORD_JSON_C = {"log" => { "key_e" => "val_e", "key_f" => "val_f" } }
   RECORD_MSGPACK_A = {"key_a" => "val_a", "key_b" => "val_b"}
   RECORD_MSGPACK_B = {"key_c" => "val_c", "key_d" => "val_d"}
   DEFAULT_TIME = Time.parse("2013-03-06 12:15:02 UTC").to_i
@@ -180,6 +181,7 @@ class RedshiftOutputTest < Test::Unit::TestCase
   def emit_json(d)
     d.emit(RECORD_JSON_A, DEFAULT_TIME)
     d.emit(RECORD_JSON_B, DEFAULT_TIME)
+    d.emit(RECORD_JSON_C, DEFAULT_TIME)
   end
   def emit_msgpack(d)
     d.emit(RECORD_MSGPACK_A, DEFAULT_TIME)
@@ -205,6 +207,7 @@ class RedshiftOutputTest < Test::Unit::TestCase
     emit_json(d_json)
     d_json.expect_format RECORD_JSON_A.to_msgpack
     d_json.expect_format RECORD_JSON_B.to_msgpack
+    d_json.expect_format RECORD_JSON_C.to_msgpack
     d_json.run
   end
 
@@ -323,7 +326,7 @@ class RedshiftOutputTest < Test::Unit::TestCase
   end
 
   def test_write_with_json
-    setup_mocks(%[val_a\tval_b\t\t\t\t\t\t\n\t\tval_c\tval_d\t\t\t\t\n])
+    setup_mocks(%[val_a\tval_b\t\t\t\t\t\t\n\t\tval_c\tval_d\t\t\t\t\n\t\t\t\tval_e\tval_f\t\t\n])
     setup_tempfile_mock_to_be_closed
     d_json = create_driver(CONFIG_JSON)
     emit_json(d_json)
@@ -523,7 +526,7 @@ class RedshiftOutputTest < Test::Unit::TestCase
     def PG.connect(dbinfo)
       return PGConnectionMock.new(:schemaname => 'test_schema')
     end
-    setup_s3_mock(%[val_a\tval_b\t\t\t\t\t\t\n\t\tval_c\tval_d\t\t\t\t\n])
+    setup_s3_mock(%[val_a\tval_b\t\t\t\t\t\t\n\t\tval_c\tval_d\t\t\t\t\n\t\t\t\tval_e\tval_f\t\t\n])
     d_json = create_driver(CONFIG_JSON_WITH_SCHEMA)
     emit_json(d_json)
     assert_equal true, d_json.run
